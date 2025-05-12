@@ -1,0 +1,150 @@
+﻿@model Contact
+@{
+    ViewData["Title"] = "Contact Us";
+    Layout = "userdash";
+}
+
+<section class="contact-section">
+    <div class="container">
+        <h1 class="contact-title">Contact Us</h1>
+        <p class="contact-subtitle">We’re here to help and answer any questions you may have. Fill out the form and we’ll get back to you shortly.</p>
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success">@ViewBag.Message</div>
+        }
+
+        <form asp-action="Contact" method="post" class="contact-form">
+            <!-- Hidden user info -->
+            <input asp-for="Email" type="hidden" />
+            <input asp-for="PhoneNumber" type="hidden" />
+            <input asp-for="CompanyName" type="hidden" />
+
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Subject <span>*</span></label>
+                <input asp-for="Subject" class="form-control" placeholder="Enter your subject" required />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-comment-dots"></i> Message <span>*</span></label>
+                <textarea asp-for="Message" class="form-control" rows="6" placeholder="Type your message here..." required></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn-send">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-yH7vOgBmm9pi7XnT7Wk5LwNblpHX5nUJnpTo1XkHAPF1/YTuvqDqE4t4WybjvlRSr69LgFTGbKVD2V6s3vUdOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    .contact-section {
+        background: #0d0d0d;
+        color: #f1c40f;
+        padding: 60px 0;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .contact-title {
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 10px;
+        color: #f1c40f;
+    }
+
+    .contact-subtitle {
+        font-size: 1.2rem;
+        text-align: center;
+        color: #ccc;
+        margin-bottom: 40px;
+    }
+
+    .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #1a1a1a;
+        padding: 30px;
+        border-radius: 10px;
+        border: 1px solid #f1c40f;
+        box-shadow: 0 0 10px rgba(241, 196, 15, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        color: #f1c40f;
+    }
+
+        label i {
+            margin-right: 6px;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        background-color: #2a2a2a;
+        border: 1px solid #f1c40f;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #d4ac0d;
+            box-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+        }
+
+    .btn-send {
+        background-color: #f1c40f;
+        color: #000;
+        border: none;
+        padding: 14px 40px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        transition: background 0.3s ease;
+        cursor: pointer;
+    }
+
+        .btn-send i {
+            margin-right: 6px;
+        }
+
+        .btn-send:hover {
+            background-color: #d4ac0d;
+        }
+
+    .alert-success {
+        background-color: #1e7e34;
+        color: white;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+        color: #ff6b6b;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

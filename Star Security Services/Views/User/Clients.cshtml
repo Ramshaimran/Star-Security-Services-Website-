@@ -1,0 +1,178 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Clients";
+    Layout = "userdash";
+    var groupedAssignments = Model.GroupBy(a => a.BookingId);
+}
+
+<section id="clients-page">
+    <div class="container">
+        <h1 class="page-title text-center">Our Valued Clients</h1>
+        <p class="page-description text-center">Explore the details of our clients, the services they have availed, and the staff assigned to them.</p>
+
+        <!-- Changed the Row class to ensure each card is stacked one after another -->
+        <div class="row">
+            @foreach (var bookingGroup in groupedAssignments)
+            {
+                var first = bookingGroup.First(); // Shared data per booking
+                <div class="col-12 mb-4">
+                    <!-- Change col-lg-4 to col-12 to make each card take full width -->
+                    <div class="client-card">
+                        <div class="client-header">
+                            <h3 class="client-name">@first.Username</h3>
+                            <span class="badge">@first.ServiceName</span>
+                        </div>
+
+                        <div class="client-info">
+                            <div class="info-item">
+                                <label>Email:</label>
+                                <p>@first.Email</p>
+                            </div>
+
+                            <div class="info-item">
+                                <label>Service Area:</label>
+                                <p>@first.ServiceArea</p>
+                            </div>
+
+                            <div class="info-item">
+                                <label>Service Duration:</label>
+                                <p>@first.ServiceDuration</p>
+                            </div>
+
+                            <div class="info-item">
+                                <label>Staff Assigned:</label>
+                                <ul class="staff-list">
+                                    @foreach (var staff in bookingGroup)
+                                    {
+                                        <li>@staff.EmployeeName</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    #clients-page {
+        background-color: #0e0e0e;
+        color: #f1c40f;
+        padding: 60px 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .page-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .page-description {
+        font-size: 1.2rem;
+        color: #ccc;
+        margin-bottom: 50px;
+    }
+
+    .client-card {
+        background: linear-gradient(145deg, #1b1b1b, #252525);
+        border: 2px solid #f1c40f;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        transition: transform 0.3s ease;
+    }
+
+        .client-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+        }
+
+    .client-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f1c40f;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .client-name {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0;
+    }
+
+    .badge {
+        background-color: #f1c40f;
+        color: #000;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+
+    .client-info .info-item {
+        margin-bottom: 15px;
+    }
+
+    .client-info label {
+        font-weight: 600;
+        color: #f1c40f;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 4px;
+        letter-spacing: 0.5px;
+    }
+
+    .client-info p {
+        color: #ddd;
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .staff-list {
+        list-style-type: disc;
+        padding-left: 20px;
+        margin: 0;
+        color: #eee;
+    }
+
+        .staff-list li {
+            margin-bottom: 5px;
+        }
+
+    /* Responsive Styling */
+    @@media (max-width: 768px) {
+        .page-title
+
+    {
+        font-size: 2.2rem;
+    }
+
+    .page-description {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+
+    .client-card {
+        padding: 20px;
+    }
+
+    .client-name {
+        font-size: 1.5rem;
+    }
+
+    .badge {
+        font-size: 0.8rem;
+    }
+
+    }
+</style>

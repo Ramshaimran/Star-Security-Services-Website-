@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Star_Security_Services.Models.Assign>
+
+@{
+    ViewData["Title"] = "Client Assignments";
+    Layout = "Employee";
+}
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .card-body {
+        background-color: #f9f9f9;
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .table {
+        margin-top: 30px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+    .btn-custom {
+        background-color: #007bff;
+        color: white;
+        font-size: 0.875rem;
+        padding: 8px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+        }
+
+    .alert {
+        margin-top: 20px;
+        font-size: 1rem;
+    }
+</style>
+
+<h2 class="text-center text-primary mb-5">Your Client Assignments</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["ErrorMessage"]</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning text-center">No assignments found for you.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var assignment in Model)
+        {
+            <!-- Left Side - Booking Info -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title" style="color:white;">Booking Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Username:</strong> @assignment.Username</p>
+                        <p><strong>Email:</strong> @assignment.Email</p>
+                        <p><strong>Service Name:</strong> @assignment.ServiceName</p>
+                        <p><strong>Service Code:</strong> @assignment.ServiceCode</p>
+                        <p><strong>Service Type:</strong> @assignment.ServiceType</p>
+                        <p><strong>Service Area:</strong> @assignment.ServiceArea</p>
+                        <p><strong>Personnel:</strong> @assignment.Personnel</p>
+                        <p><strong>Service Duration:</strong> @assignment.ServiceDuration</p>
+                        <p><strong>Booking ID:</strong> @assignment.BookingId</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Employee Info -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title" style="color:white;">Assigned Employee Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Employee Name:</strong> @assignment.EmployeeName</p>
+                        <p><strong>Employee Email:</strong> @assignment.EmployeeEmail</p>
+                        <p><strong>Employee Department:</strong> @assignment.EmployeeDepartment</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

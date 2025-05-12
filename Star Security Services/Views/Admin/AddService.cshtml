@@ -1,0 +1,79 @@
+﻿@model Star_Security_Services.Models.Services
+
+@{
+    ViewData["Title"] = "Add Service";
+}
+
+<h2>Add New Service</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form asp-action="AddService" method="post">
+    <div class="form-group">
+        <label>Title</label>
+        <input asp-for="Title" class="form-control" required />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Service Code</label>
+        <select asp-for="ServiceCode" class="form-control">
+            <option value="">-- Select Service Code --</option>
+            <option value="SC-001">SC-001</option>
+            <option value="SC-002">SC-002</option>
+            <option value="SC-003">SC-003</option>
+            <option value="SC-004">SC-004</option>
+        </select>
+        <span asp-validation-for="ServiceCode" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea asp-for="Description" class="form-control" required></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Service Type</label>
+        <select asp-for="ServiceType" class="form-control" required>
+            <option value="">-- Select Type --</option>
+            <option value="Manned Guarding">Manned Guarding</option>
+            <option value="Cash Services">Cash Services</option>
+            <option value="Electronic Security Systems">Electronic Security Systems</option>
+            <option value="Investigation Services">Investigation Services</option>
+        </select>
+        <span asp-validation-for="ServiceType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Service Area</label>
+        <select asp-for="ServiceArea" class="form-control" required>
+            <option value="">-- Select Area --</option>
+            <option value="North">North Region</option>
+            <option value="South">South Region</option>
+            <option value="East">East Region</option>
+            <option value="West">West Region</option>
+        </select>
+        <span asp-validation-for="ServiceArea" class="text-danger"></span>
+    </div>
+
+
+
+    <!-- Ensure IsActive is always sent -->
+    <div class="form-group">
+        <label>Status</label><br />
+        <input type="radio" asp-for="IsActive" value="true" checked /> Active
+        <input type="radio" asp-for="IsActive" value="false" /> Inactive
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Service</button>
+    <a asp-action="ManageServices" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

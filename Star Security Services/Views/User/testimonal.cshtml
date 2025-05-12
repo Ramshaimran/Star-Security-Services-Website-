@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Star_Security_Services.Models.Testimonials>
+@{
+    ViewBag.Title = "Testimonials";
+    Layout = "userdash";
+
+    var userName = Context.Session.GetString("username");
+    var userImage = Context.Session.GetString("profile_image") ?? "default-image.png";
+}
+
+<div style="background-color: #111; min-height: 100vh; padding: 60px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <!-- Testimonial Form (Full Width) -->
+            <div class="col-lg-8 col-md-10 col-12 mb-4">
+                <div class="card p-4" style="background-color: #1d1d1d; border-radius: 15px; box-shadow: 0 0 30px rgba(243, 156, 18, 0.2); border: 1px solid #d4af37;">
+                    <h2 class="text-center" style="color: #d4af37; font-weight: 700; font-size: 2rem;">Share Your Experience</h2>
+
+                    <form asp-action="Testimonal" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="Username" value="@userName" />
+                        <input type="hidden" name="Image" value="@userImage" />
+
+                        <div class="form-group mb-4">
+                            <label for="Feedback" style="color: #d4af37; font-weight: 600; font-size: 1.2rem;">Your Feedback</label>
+                            <textarea id="Feedback" name="Feedback" class="form-control" rows="6"
+                                      style="background-color: #333; color: white; border: 1px solid #d4af37; border-radius: 15px; padding: 15px; font-size: 1rem; transition: all 0.3s ease;"
+                                      placeholder="Share your thoughts with us..." required></textarea>
+                        </div>
+                        <center>
+                        <button type="submit" class="btn btn-block" style="background-color: #d4af37; color: black; font-weight: bold; padding: .9vw; font-size: 1.2rem; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;">
+                            Submit
+                        </button>
+                        </center>
+
+                        @if (TempData["Success"] != null)
+                        {
+                            <div class="alert text-center mt-4" style="background-color: #333; color: #d4af37; border-left: 5px solid #d4af37; padding: 10px;">
+                                @TempData["Success"]
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+
+            <!-- Testimonials (Full Width Below Form) -->
+            <div class="col-12">
+                <div class="container-fluid" style="padding: 20px;">
+                    <div class="card p-4" style="background-color: #222; border-radius: 15px; ">
+                        <h3 class="text-center" style="color: #d4af37; font-weight: 700; font-size: 1.8rem;">What Our Clients Say</h3>
+
+                        <div class="testimonial-list">
+                            @foreach (var item in Model)
+                            {
+                                <div class="testimonial-item mb-4" style="background: #1e1e1e; padding: 20px; border-radius: 15px; ">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="~/users/@item.Image" alt="Profile"
+                                             style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; margin-right: 15px;" />
+                                        <div>
+                                            <span style="color: #d4af37; font-weight: 600; font-size: 1.1rem;">@item.Username</span>
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 16px; line-height: 1.7; color: #ccc; font-style: italic;">
+                                        <i class="fas fa-quote-left" style="color: #d4af37;"></i> @item.Feedback
+                                    </p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

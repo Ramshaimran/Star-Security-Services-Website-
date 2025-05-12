@@ -1,0 +1,75 @@
+﻿@model Star_Security_Services.Models.vacan
+
+@{
+    ViewData["Title"] = "Edit Vacancy";
+}
+
+<h2>Edit Vacancy</h2>
+
+<form asp-action="EditVacancy" method="post">
+    <input type="hidden" asp-for="VacancyID" />
+
+    <div class="form-group">
+        <label asp-for="JobTitle"></label>
+        <input asp-for="JobTitle" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Department"></label>
+        <input asp-for="Department" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="JobDescription"></label>
+        <textarea asp-for="JobDescription" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="Location"></label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="VacancyStatus"></label>
+        <input asp-for="VacancyStatus" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PostedDate"></label>
+        <input asp-for="PostedDate" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ClosingDate"></label>
+        <input asp-for="ClosingDate" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ExperienceRequired"></label>
+        <input asp-for="ExperienceRequired" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EducationalQualification"></label>
+        <input asp-for="EducationalQualification" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SalaryRange"></label>
+        <input asp-for="SalaryRange" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="VacancyLink"></label>
+        <input asp-for="VacancyLink" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PostedBy"></label>
+        <input asp-for="PostedBy" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NoOfOpenings"></label>
+        <input asp-for="NoOfOpenings" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SkillsRequired"></label>
+        <input asp-for="SkillsRequired" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a asp-action="ManageVacancies" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

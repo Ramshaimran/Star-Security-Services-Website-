@@ -1,0 +1,52 @@
+﻿@model List<Star_Security_Services.Models.Final>
+
+@{
+    ViewBag.Title = "Manage Bookings";
+    Layout = "dashboard";
+}
+
+<h2 class="mb-4 text-success">Service Bookings</h2>
+
+<table class="table table-bordered table-hover bg-white">
+    <thead class="thead-dark">
+        <tr>
+            <th>Status</th> <!-- NEW COLUMN -->
+            <th>Username</th>
+            <th>Email</th>
+            <th>Service Name</th>
+            <th>Code</th>
+            <th>Type</th>
+            <th>Area</th>
+            <th>Personnel</th>
+            <th>Duration</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            var isAssigned = booking.IsEmployeeAssigned;
+            <!-- We'll set this in controller -->
+
+            <tr>
+                <!-- Status Light -->
+                <td>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background-color:@(isAssigned ? "green" : "red"); margin: auto;"></div>
+                </td>
+                <td>@booking.username</td>
+                <td>@booking.email</td>
+                <td>@booking.ServiceName</td>
+                <td>@booking.ServiceCode</td>
+                <td>@booking.ServiceType</td>
+                <td>@booking.ServiceArea</td>
+                <td>@booking.Personnel</td>
+                <td>@booking.ServiceDuration</td>
+                <td>
+                    <a href="@Url.Action("BookEmployee", "Admin", new { serviceType = booking.ServiceType, bookingId = booking.F_id })" class="btn btn-primary">
+                        Book Employee
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

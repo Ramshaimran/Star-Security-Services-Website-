@@ -1,0 +1,70 @@
+﻿@model List<Star_Security_Services.Models.Assign>
+
+@{
+    ViewBag.Title = "Assigned Employees";
+    Layout = "dashboard";
+}
+
+<h2 class="mb-4" style="color: #026440;"><i class="bi bi-person-badge-fill"></i> Assigned Employees</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success shadow-sm">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger shadow-sm">@TempData["ErrorMessage"]</div>
+}
+
+<div class="card shadow border-0">
+    <div class="card-header text-white" style="background: linear-gradient(135deg, #013220, #026440);">
+        <h5 class="mb-0"><i class="bi bi-people-fill"></i> Assignment List</h5>
+    </div>
+    <div class="card-body bg-light">
+        <table class="table table-hover table-bordered table-striped bg-white align-middle">
+            <thead class="table-success text-dark">
+                <tr>
+                    <th>👤 Employee</th>
+                    <th>🏢 Department</th>
+                    <th>📧 Email</th>
+                    <th>🛡️ Service</th>
+                    <th>🆔 Code</th>
+                    <th>📍 Area</th>
+                    <th>👥 Personnel</th>
+                    <th>⏱️ Duration</th>
+                    <th class="text-center" style="width: 220px;">⚙️ Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.EmployeeName</td>
+                        <td>@item.EmployeeDepartment</td>
+                        <td>@item.EmployeeEmail</td>
+                        <td>@item.ServiceName</td>
+                        <td>@item.ServiceCode</td>
+                        <td>@item.ServiceArea</td>
+                        <td>@item.Personnel</td>
+                        <td>@item.ServiceDuration</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a asp-action="AssignmentDetails" asp-route-id="@item.A_id" class="btn btn-outline-success">
+                                    <i class="bi bi-eye-fill"></i> Details
+                                </a>
+                                <a asp-action="EditAssignment" asp-route-id="@item.A_id" class="btn btn-outline-warning">
+                                    <i class="bi bi-pencil-fill"></i> Edit
+                                </a>
+                                <form asp-action="DeleteAssignment" asp-route-id="@item.A_id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this assignment?')">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

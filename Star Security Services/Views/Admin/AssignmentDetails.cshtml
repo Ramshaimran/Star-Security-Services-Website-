@@ -1,0 +1,57 @@
+﻿@model Star_Security_Services.Models.Assign
+
+@{
+    ViewBag.Title = "Assignment Details";
+    Layout = "dashboard";
+}
+
+<h2 class="mb-4 text-primary"><i class="bi bi-clipboard-check"></i> Assignment Details</h2>
+
+<div class="card border-0 shadow-lg">
+    <div class="card-header bg-gradient text-white" style="background-color:darkgreen;" )
+;">
+        <h4 class="mb-0"><i class="bi bi-person-check-fill"></i> Employee Assignment Overview</h4>
+    </div>
+    <div class="card-body">
+
+        <!-- Employee Info -->
+        <h5 class="text-success mb-3"><i class="bi bi-person-badge-fill"></i> Assigned Employee</h5>
+        <div class="row mb-4">
+            <div class="col-md-4"><strong>Employee Name:</strong><br />@Model.EmployeeName</div>
+            <div class="col-md-4"><strong>Email:</strong><br />@Model.EmployeeEmail</div>
+            <div class="col-md-4"><strong>Department:</strong><br />@Model.EmployeeDepartment</div>
+        </div>
+
+        <hr class="mb-4" />
+
+        <!-- Booking Info -->
+        <h5 class="text-info mb-3"><i class="bi bi-file-earmark-text-fill"></i> Booking Details</h5>
+        <div class="row mb-4">
+            <div class="col-md-4"><strong>Username:</strong><br />@Model.Username</div>
+            <div class="col-md-4"><strong>User Email:</strong><br />@Model.Email</div>
+            <div class="col-md-4"><strong>Service Name:</strong><br />@Model.ServiceName</div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4"><strong>Service Code:</strong><br />@Model.ServiceCode</div>
+            <div class="col-md-4"><strong>Service Type:</strong><br />@Model.ServiceType</div>
+            <div class="col-md-4"><strong>Service Area:</strong><br />@Model.ServiceArea</div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4"><strong>Personnel:</strong><br />@Model.Personnel</div>
+            <div class="col-md-4"><strong>Duration:</strong><br />@Model.ServiceDuration</div>
+            <div class="col-md-4"><strong>Booking ID:</strong><br />@Model.BookingId</div>
+        </div>
+
+        <div class="text-end mt-4">
+            <a asp-action="ManageAssignments" class="btn btn-secondary me-2">
+                <i class="bi bi-arrow-left-circle"></i> Back
+            </a>
+            <a asp-action="EditAssignment" asp-route-id="@Model.A_id" class="btn btn-warning">
+                <i class="bi bi-pencil-square"></i> Edit
+            </a>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,148 @@
+﻿@model Star_Security_Services.Models.Final
+
+@{
+    ViewData["Title"] = "Book Service";
+    Layout = "userdash";
+}
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="premium-card p-4 shadow-lg">
+                <h2 class="text-center text-gold fw-bold mb-4">Book Service</h2>
+                <form method="post" asp-controller="User" asp-action="BookServices">
+                    @Html.AntiForgeryToken()
+
+                    <!-- Readonly - set by controller -->
+                    <div class="form-group">
+                        <label asp-for="username" class="text-gold">Username</label>
+                        <input asp-for="username" class="form-control" readonly />
+                        <span asp-validation-for="username" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="email" class="text-gold">Email</label>
+                        <input asp-for="email" class="form-control" readonly />
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ServiceName" class="text-gold">Service Name</label>
+                        <input asp-for="ServiceName" class="form-control" readonly />
+                        <span asp-validation-for="ServiceName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ServiceCode" class="text-gold">Service Code</label>
+                        <input asp-for="ServiceCode" class="form-control" readonly />
+                        <span asp-validation-for="ServiceCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ServiceType" class="text-gold">Service Type</label>
+                        <input asp-for="ServiceType" class="form-control" readonly />
+                        <span asp-validation-for="ServiceType" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ServiceArea" class="text-gold">Service Area</label>
+                        <input asp-for="ServiceArea" class="form-control" readonly />
+                        <span asp-validation-for="ServiceArea" class="text-danger"></span>
+                    </div>
+
+                    <!-- Editable Fields -->
+                    <div class="form-group">
+                        <label asp-for="Personnel" class="text-gold">Personnel</label>
+                        <input asp-for="Personnel" class="form-control" required />
+                        <span asp-validation-for="Personnel" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ServiceDuration" class="text-gold">Service Duration</label>
+                        <input asp-for="ServiceDuration" class="form-control" required />
+                        <span asp-validation-for="ServiceDuration" class="text-danger"></span>
+                    </div>
+
+                    <!-- Hidden field for ServiceID -->
+                    <input type="hidden" asp-for="ServiceID" />
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-gold px-4 py-2 shadow-sm">
+                            <i class="fas fa-check-circle me-2"></i> Submit Booking
+                        </button>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 💅 Dark Theme + Fixed Input Styles -->
+<style>
+    body {
+        background-color: #0f0f0f;
+        color: #fff;
+    }
+
+    .premium-card {
+        background: linear-gradient(145deg, #1c1c1c, #111);
+        border: 1px solid #2c2c2c;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .premium-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(255, 183, 0, 0.15);
+        }
+
+    .text-gold,
+    label {
+        color: #ffb700;
+    }
+
+    .form-control {
+        background-color: #1c1c1c !important;
+        color: #fff !important;
+        border: 1px solid #444;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .form-control:focus {
+            background-color: #2a2a2a;
+            border-color: #ffb700;
+            box-shadow: none;
+        }
+
+    .btn-gold {
+        background-color: #ffb700;
+        color: #000;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-gold:hover {
+            background-color: #e6a300;
+            color: #000;
+        }
+
+    @@media (max-width: 768px) {
+        .col-lg-8
+
+    {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    }
+</style>

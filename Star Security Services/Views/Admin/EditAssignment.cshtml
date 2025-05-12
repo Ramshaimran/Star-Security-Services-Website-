@@ -1,0 +1,93 @@
+﻿@model Star_Security_Services.Models.Assign
+
+@{
+    ViewBag.Title = "Edit Assignment";
+    Layout = "dashboard";
+}
+
+<h2 class="mb-4 text-warning">Edit Assignment</h2>
+
+<form asp-action="EditAssignment" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="A_id" />
+    <input type="hidden" asp-for="BookingId" /> <!-- Fix: Include BookingId -->
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Username" class="form-label"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="ServiceName" class="form-label"></label>
+            <input asp-for="ServiceName" class="form-control" />
+            <span asp-validation-for="ServiceName" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="ServiceCode" class="form-label"></label>
+            <input asp-for="ServiceCode" class="form-control" />
+            <span asp-validation-for="ServiceCode" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="ServiceType" class="form-label"></label>
+            <input asp-for="ServiceType" class="form-control" />
+            <span asp-validation-for="ServiceType" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="ServiceArea" class="form-label"></label>
+            <input asp-for="ServiceArea" class="form-control" />
+            <span asp-validation-for="ServiceArea" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="Personnel" class="form-label"></label>
+            <input asp-for="Personnel" class="form-control" />
+            <span asp-validation-for="Personnel" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="ServiceDuration" class="form-label"></label>
+            <input asp-for="ServiceDuration" class="form-control" />
+            <span asp-validation-for="ServiceDuration" class="text-danger small"></span>
+        </div>
+
+        <hr />
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="EmployeeName" class="form-label"></label>
+            <input asp-for="EmployeeName" class="form-control" />
+            <span asp-validation-for="EmployeeName" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="EmployeeEmail" class="form-label"></label>
+            <input asp-for="EmployeeEmail" class="form-control" />
+            <span asp-validation-for="EmployeeEmail" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="EmployeeDepartment" class="form-label"></label>
+            <input asp-for="EmployeeDepartment" class="form-control" />
+            <span asp-validation-for="EmployeeDepartment" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-12 text-end mt-4">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <a asp-action="ManageAssignments" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

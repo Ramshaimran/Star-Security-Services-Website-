@@ -1,0 +1,170 @@
+﻿@model Star_Security_Services.Models.User
+
+@{
+    ViewData["Title"] = "User Signup";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>User Signup - Star Security</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #1c1c1c, #2e2e2e);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .signup-card {
+            max-width: 900px;
+            background-color: #222;
+            padding: 2rem 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-control {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+        }
+
+            .form-control::placeholder {
+                color: #aaa;
+            }
+
+            .form-control:focus {
+                border-color: #ffc107;
+                box-shadow: none;
+            }
+
+        .btn-primary {
+            background-color: #ffc107;
+            border: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+            .btn-primary:hover {
+                background-color: #e0a800;
+            }
+
+        .text-brand {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: 'Choose Profile Image';
+            display: inline-block;
+            background: #444;
+            color: #fff;
+            border: 1px solid #777;
+            padding: 6px 12px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .custom-file-input:hover::before {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="signup-card">
+        <div class="text-center mb-4">
+            <h3 class="text-brand">Create Your Account</h3>
+            <p class="small">Join Star Security and manage your services securely</p>
+        </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        <form asp-action="Signup" method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+                <!-- Left Column -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="ProfileImage" class="form-label">Profile Image</label>
+                        <input asp-for="ProfileImage" name="ProfileImage" type="file" class="form-control custom-file-input" accept="image/*" />
+                        <span asp-validation-for="ProfileImage" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="username">Username</label>
+                        <input asp-for="username" class="form-control" />
+                        <span asp-validation-for="username" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="example@domain.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="CompanyName">Company Name</label>
+                        <input asp-for="CompanyName" class="form-control" />
+                        <span asp-validation-for="CompanyName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PhoneNumber">Phone Number</label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Address">Address</label>
+                        <textarea asp-for="Address" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="Address" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <small>Already have an account? <a href="/Admin/login" class="text-warning">Login</a></small>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</body>
+</html>

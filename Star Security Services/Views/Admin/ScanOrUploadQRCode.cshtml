@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "Upload and Scan QR Code";
+}
+
+<h2>Upload QR Code Image</h2>
+
+<!-- Upload Button -->
+<div class="mb-3">
+    <label for="qr-file-upload" class="btn btn-info">Upload QR Code Image</label>
+    <input type="file" id="qr-file-upload" style="display:none;" accept="image/png, image/jpeg" />
+</div>
+
+<!-- Scan result status -->
+<div id="qr-result" class="mt-4">
+    <h3>QR Code Result</h3>
+    <div id="result" class="text-muted">Waiting for scan...</div>
+    <div id="scanned-text" class="mt-2 text-info"></div>
+</div>
+
+<!-- Employee Info Table -->
+<div id="employee-details" class="mt-4" style="display:none;">
+    <h4>Employee Details</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody id="employee-info">
+            <!-- Filled via JS -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Display message from TempData -->
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<!-- Display employee details from ViewData -->
+@if (ViewData["Employee"] != null)
+{
+    var employee = ViewData["Employee"] as Employee;
+    if (employee != null)
+    {
+        <div id="employee-details">
+            <h4>Employee Details</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Role</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@employee.Code</td>
+                        <td>@employee.Name</td>
+                        <td>@employee.Department</td>
+                        <td>@employee.Role</td>
+                        <td>@employee.ContactNumber</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+<!-- jsQR library (needed for decoding QR) -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("qr-file-upload");
+
+        fileInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (!file || !file.type.startsWith("image/")) {
+                document.getElementById("result").innerHTML = '<div class="alert alert-warning">Please upload a valid image file (PNG or JPEG).</div>';
+                return;
+            }
+
+            document.getElementById("result").innerHTML = '<div class="alert alert-info">Processing QR code...</div>';
+            document.getElementById("scanned-text").innerHTML = '';
+            document.getElementById("employee-details").style.display = 'none';
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0);
+
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const qrCode = jsQR(imageData.data, canvas.width, canvas.height);
+
+                    if (qrCode) {
+                        const code = qrCode.data.trim();
+                        document.getElementById("scanned-text").innerText = 'Decoded QR Code: ' + code;
+                        document.getElementById("result").innerHTML = '<div class="alert alert-success">QR Code decoded successfully!</div>';
+
+                        // Send the QR code data to the server to fetch the employee info
+                        fetch('@Url.Action("ProcessScannedQRCode", "Admin")', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ qrCodeData: code })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                const emp = data.employee;
+                                document.getElementById("employee-info").innerHTML = `
+                                    <tr>
+                                        <td>${emp.Code}</td>
+                                        <td>${emp.Name}</td>
+                                        <td>${emp.Department}</td>
+                                        <td>${emp.Role}</td>
+                                        <td>${emp.ContactNumber}</td>
+                                    </tr>
+                                `;
+                                document.getElementById("employee-details").style.display = 'block';
+                            } else {
+                                document.getElementById("result").innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                                document.getElementById("employee-details").style.display = 'none';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            document.getElementById("result").innerHTML = '<div class="alert alert-danger">Error fetching employee data.</div>';
+                        });
+                    } else {
+                        document.getElementById("result").innerHTML = '<div class="alert alert-danger">Could not decode QR code.</div>';
+                    }
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+</script>

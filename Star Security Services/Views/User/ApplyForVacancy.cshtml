@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Star_Security_Services.Models.vacan>
+
+@{
+    ViewData["Title"] = "Vacancies";
+}
+
+<h2>Available Vacancies</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>No vacancies available.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Job Title</th>
+                <th>Department</th>
+                <th>Location</th>
+                <th>Posted Date</th>
+                <th>Closing Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vacancy in Model)
+            {
+                <tr>
+                    <td>@vacancy.JobTitle</td>
+                    <td>@vacancy.Department</td>
+                    <td>@vacancy.Location</td>
+                    <td>@vacancy.PostedDate</td>
+                    <td>@vacancy.ClosingDate</td>
+                    <td>
+                        <!-- Apply for the vacancy button -->
+                        <form method="post" action="@Url.Action("ApplyForVacancy", "User")">
+                            <input type="hidden" name="vacancyId" value="@vacancy.VacancyID" />
+                            <button type="submit" class="btn btn-sm btn-primary">Apply Online</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

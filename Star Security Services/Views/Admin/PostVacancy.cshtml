@@ -1,0 +1,115 @@
+﻿@model Star_Security_Services.Models.vacan
+
+@{
+    ViewData["Title"] = "Post Vacancy";
+}
+
+<h2>Post a New Vacancy</h2>
+
+<!-- Success Message -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<form asp-action="PostVacancy" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label asp-for="JobTitle"></label>
+        <input asp-for="JobTitle" class="form-control" />
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Department"></label>
+        <input asp-for="Department" class="form-control" />
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="JobDescription"></label>
+        <textarea asp-for="JobDescription" class="form-control"></textarea>
+        <span asp-validation-for="JobDescription" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Location"></label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VacancyStatus"></label>
+        <select asp-for="VacancyStatus" class="form-control">
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+        </select>
+        <span asp-validation-for="VacancyStatus" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PostedDate"></label>
+        <input asp-for="PostedDate" type="date" class="form-control" />
+        <span asp-validation-for="PostedDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClosingDate"></label>
+        <input asp-for="ClosingDate" type="date" class="form-control" />
+        <span asp-validation-for="ClosingDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ExperienceRequired"></label>
+        <input asp-for="ExperienceRequired" type="number" class="form-control" />
+        <span asp-validation-for="ExperienceRequired" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EducationalQualification"></label>
+        <input asp-for="EducationalQualification" class="form-control" />
+        <span asp-validation-for="EducationalQualification" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SalaryRange"></label>
+        <input asp-for="SalaryRange" class="form-control" />
+        <span asp-validation-for="SalaryRange" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VacancyLink"></label>
+        <input asp-for="VacancyLink" class="form-control" />
+        <span asp-validation-for="VacancyLink" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PostedBy"></label>
+        <input asp-for="PostedBy" class="form-control" />
+        <span asp-validation-for="PostedBy" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NoOfOpenings"></label>
+        <input asp-for="NoOfOpenings" type="number" class="form-control" />
+        <span asp-validation-for="NoOfOpenings" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SkillsRequired"></label>
+        <textarea asp-for="SkillsRequired" class="form-control"></textarea>
+        <span asp-validation-for="SkillsRequired" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Post Vacancy</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

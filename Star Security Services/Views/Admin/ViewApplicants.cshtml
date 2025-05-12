@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Applicants for Training";
+}
+
+<h2 class="mb-4">Applicants for Training</h2>
+
+<!-- ✅ Success message -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- ❌ Error message -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <a href="@Url.Action("ManageTrainings", "Admin")" class="btn btn-primary">Back to Trainings</a>
+</p>
+
+@if (ViewBag.TrainingId != null)
+{
+    <h3>Training ID: @ViewBag.TrainingId</h3>
+    <h4>Training Title: @ViewBag.TrainingName</h4> <!-- Display Training Title -->
+}
+
+@if (Model != null && ((List<dynamic>)Model).Count > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Employee Code</th>
+                <th>Applied On</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in (List<dynamic>)Model)
+            {
+                <tr>
+                    <td>@applicant.Name</td>
+                    <td>@applicant.Email</td>
+                    <td>@applicant.Code</td>
+                    <td>@DateTime.Parse(applicant.AppliedOn).ToString("dd MMM yyyy HH:mm:ss")</td>
+                    <td>
+                        <!-- Confirm Button -->
+                        <form method="post" asp-action="HandleApplication" asp-controller="Admin" style="display:inline-block;">
+                            <input type="hidden" name="Email" value="@applicant.Email" />
+                            <input type="hidden" name="Name" value="@applicant.Name" />
+                            <input type="hidden" name="TrainingName" value="@ViewBag.TrainingName" /> <!-- Pass Training Name from ViewBag -->
+                            <input type="hidden" name="ActionType" value="Confirm" />
+                            <input type="hidden" name="TrainingId" value="@ViewBag.TrainingId" />
+                            <button type="submit" class="btn btn-success btn-sm">Confirm</button>
+                        </form>
+
+                        <!-- Reject Button -->
+                        <form method="post" asp-action="HandleApplication" asp-controller="Admin" style="display:inline-block; margin-left: 5px;">
+                            <input type="hidden" name="Email" value="@applicant.Email" />
+                            <input type="hidden" name="Name" value="@applicant.Name" />
+                            <input type="hidden" name="TrainingName" value="@ViewBag.TrainingName" /> <!-- Pass Training Name from ViewBag -->
+                            <input type="hidden" name="ActionType" value="Reject" />
+                            <input type="hidden" name="TrainingId" value="@ViewBag.TrainingId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-center text-muted">No applicants for this training.</p>
+}

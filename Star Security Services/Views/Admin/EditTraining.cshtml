@@ -1,0 +1,49 @@
+﻿@model Star_Security_Services.Models.Training
+@{
+    ViewBag.Title = "Edit Training";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form asp-action="EditTraining" method="post">
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea class="form-control" id="Description" name="Description">@Model.Description</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Department">Department</label>
+        <input type="text" class="form-control" id="Department" name="Department" value="@Model.Department" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Mode">Mode</label>
+        <select class="form-control" id="Mode" name="Mode" asp-for="Mode" required>
+            <option value="Online" selected="@Model.Mode == " Online"">Online</option>
+            <option value="In-Person" selected="@Model.Mode == " In-Person"">In-Person</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="StartDate">Start Date</label>
+        <input type="date" class="form-control" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" required />
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">End Date</label>
+        <input type="date" class="form-control" id="EndDate" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" required />
+    </div>
+
+    <div class="form-group">
+        <label for="TrainerName">Trainer Name</label>
+        <input type="text" class="form-control" id="TrainerName" name="TrainerName" value="@Model.TrainerName" />
+    </div>
+    <input type="hidden" name="TrainingID" value="@Model.TrainingID" />
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

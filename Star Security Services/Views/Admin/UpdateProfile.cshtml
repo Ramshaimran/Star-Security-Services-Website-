@@ -1,0 +1,33 @@
+﻿@model Star_Security_Services.Models.Admin
+@{
+    Layout = "~/Views/Shared/dashboard.cshtml";
+}
+
+<div class="container mt-4">
+    <h2><i class="fas fa-user-cog"></i> Update Profile</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <form asp-action="UpdateProfile" method="post">
+        <div class="form-group">
+            <label>Email</label>
+            <input asp-for="admin_email" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input asp-for="admin_name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input asp-for="admin_password" type="password" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

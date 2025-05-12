@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Star_Security_Services.Models.vacan>
+
+@{
+    ViewData["Title"] = "Manage Vacancies";
+}
+
+<h2>Manage Vacancies</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>No vacancies available.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Job Title</th>
+                <th>Department</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Posted Date</th>
+                <th>Closing Date</th>
+                <th>Openings</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var v in Model)
+            {
+                <tr>
+                    <td>@v.JobTitle</td>
+                    <td>@v.Department</td>
+                    <td>@v.Location</td>
+                    <td>@v.VacancyStatus</td>
+                    <td>@v.PostedDate</td>
+                    <td>@v.ClosingDate</td>
+                    <td>@v.NoOfOpenings</td>
+                    <td>
+                        <a asp-action="EditVacancy" asp-route-id="@v.VacancyID" class="btn btn-sm btn-primary">Edit</a>
+
+                        <!-- New button to view applicants -->
+                        <a asp-action="ViewApplicantsForVacancy" asp-route-vacancyId="@v.VacancyID" class="btn btn-sm btn-info">View Applicants</a>
+
+                        <form asp-action="DeleteVacancy" asp-route-id="@v.VacancyID" method="post" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

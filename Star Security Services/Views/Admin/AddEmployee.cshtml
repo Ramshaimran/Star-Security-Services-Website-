@@ -1,0 +1,111 @@
+﻿@model Star_Security_Services.Models.Employee
+@{
+    ViewData["Title"] = "Add Employee";
+}
+
+<h2 class="mb-4 text-success">Add New Employee</h2>
+
+<form asp-action="AddEmployee" method="post">
+    <div class="form-group">
+        <label asp-for="Code"></label>
+        <input asp-for="Code" class="form-control" id="employeeCode" readonly />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="email"></label>
+        <input asp-for="email" class="form-control" />
+        <span asp-validation-for="email" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="password"></label>
+        <input asp-for="password" class="form-control" />
+        <span asp-validation-for="password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactNumber"></label>
+        <input asp-for="ContactNumber" class="form-control" />
+        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Department"></label>
+        <select asp-for="Department" class="form-control">
+            <option value="">-- Select Department --</option>
+            <option>Manned Guarding</option>
+            <option>Cash Services</option>
+            <option>Investigations</option>
+            <option>Electronic Security Systems</option>
+            <option>Training & Recruitment</option>
+            <option>Administration</option>
+        </select>
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Role"></label>
+        <select asp-for="Role" class="form-control">
+            <option value="">-- Select Role --</option>
+            <option>Guard</option>
+            <option>Bodyguard</option>
+            <option>Supervisor</option>
+            <option>Patrol Officer</option>
+            <option>Cash Custodian</option>
+            <option>ATM Officer</option>
+            <option>Investigator</option>
+            <option>CCTV Technician</option>
+            <option>Trainer</option>
+            <option>Recruitment Officer</option>
+            <option>Admin Executive</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Client"></label>
+        <input asp-for="Client" class="form-control" />
+        <span asp-validation-for="Client" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Achievements"></label>
+        <textarea asp-for="Achievements" class="form-control"></textarea>
+        <span asp-validation-for="Achievements" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Employee</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function generateRandomCode(length) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const codeField = document.getElementById("employeeCode");
+
+            if (!codeField.value) {
+                codeField.value = generateRandomCode(8); // Adjust length if needed
+            }
+        });
+    </script>
+}

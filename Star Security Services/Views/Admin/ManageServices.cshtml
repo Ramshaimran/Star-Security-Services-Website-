@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Star_Security_Services.Models.Services>
+
+@{
+    ViewData["Title"] = "Manage Services";
+}
+
+<h2>Manage Services</h2>
+
+<a asp-action="AddService" class="btn btn-success mb-3">Add New Service</a>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Service Code</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Service Type</th>
+            <th>Service Area</th>
+            <th>Status</th>
+            <th style="width: 180px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var service in Model)
+            {
+                <tr>
+                    <td>@service.ServiceCode</td>
+                    <td>@service.Title</td>
+                    <td>@service.Description</td>
+                    <td>@service.ServiceType</td>
+                    <td>@service.ServiceArea</td>
+                    <td>@(service.IsActive ? "Active" : "Inactive")</td>
+                    <td>
+                        <a asp-action="EditService" asp-route-id="@service.ServiceID" class="btn btn-sm btn-warning">Edit</a>
+                        <form asp-action="DeleteService" asp-route-id="@service.ServiceID" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center">No services available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

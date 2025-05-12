@@ -1,0 +1,159 @@
+﻿@model List<Star_Security_Services.Models.vacan>
+@{
+    Layout = "userdash";
+    var appliedVacancies = ViewData["AppliedVacancies"] as List<int> ?? new List<int>();
+}
+
+<style>
+    body {
+        background-color: #0f0f0f;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .careers-title {
+        text-align: center;
+        color: #f39c12;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .careers-sub {
+        text-align: center;
+        color: #ccc;
+        font-size: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 0 2rem 4rem;
+    }
+
+    .card {
+        background-color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .card h2 {
+            color: #f39c12;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: #ddd;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+    .apply-btn {
+        display: inline-block;
+        margin-top: 1rem;
+        background-color: #f39c12;
+        color: #000;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+        .apply-btn:hover {
+            background-color: #f39c12;
+        }
+
+    .no-vacancy {
+        text-align: center;
+        color: #999;
+        margin-top: 50px;
+    }
+
+    .status-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .status-dot {
+        height: 12px;
+        width: 12px;
+        background-color: limegreen;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+
+    .status-text {
+        color: #ccc;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+</style>
+
+<section>
+    <h1 class="careers-title">Careers With Us</h1>
+    <p class="careers-sub">Explore exciting career opportunities with Star Security Services</p>
+
+  
+
+    @if (!Model.Any())
+    {
+        <p class="no-vacancy">No vacancies available at the moment.</p>
+    }
+    else
+    {
+        <div class="cards-container">
+            @foreach (var v in Model)
+            {
+                // Check if the user has already applied for this vacancy
+                if (appliedVacancies.Contains(v.VacancyID))
+                {
+                    continue; // Skip rendering this job if already applied
+                }
+
+                <div class="card">
+                    <h2 style="margin-top:.5vw;">@v.JobTitle</h2>
+
+                    <div class="status-container">
+                        <span class="status-dot"></span>
+                        <span class="status-text">@v.VacancyStatus</span>
+                    </div>
+
+                    <p><strong>Department:</strong> @v.Department</p>
+                    <p><strong>Location:</strong> @v.Location</p>
+                    <p><strong>Experience:</strong> @v.ExperienceRequired years</p>
+                    <p><strong>Education:</strong> @v.EducationalQualification</p>
+                    <p><strong>Salary:</strong> @v.SalaryRange</p>
+                    <p><strong>Openings:</strong> @v.NoOfOpenings</p>
+                    <p><strong>Skills:</strong> @v.SkillsRequired</p>
+                    <p><strong>Posted By:</strong> @v.PostedBy</p>
+                    <p><strong>Posted:</strong> @v.PostedDate</p>
+                    <p><strong>Closing:</strong> @v.ClosingDate</p>
+
+                    @if (!string.IsNullOrEmpty(v.VacancyLink))
+                    {
+                        <!-- Form to Apply -->
+                        <form method="post" action="@Url.Action("ApplyForVacancy", "User")">
+                            <input type="hidden" name="vacancyId" value="@v.VacancyID" />
+                            <button type="submit" class="apply-btn">Apply Online</button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+    }
+</section>

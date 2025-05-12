@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Star_Security_Services.Models.Training>
+
+@{
+    ViewBag.Title = "Manage Trainings";
+    Layout = "dashboard"; // or your admin layout if different
+}
+
+<h2 class="mb-4">@ViewBag.Title</h2>
+
+<p>
+    <a href="@Url.Action("AddTraining", "Admin")" class="btn btn-success mb-3">Add New Training</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Department</th>
+            <th>Mode</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Trainer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var training in Model)
+            {
+                <tr>
+                    <td>@training.Title</td>
+                    <td>@training.Department</td>
+                    <td>@training.Mode</td>
+                    <td>@training.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@training.EndDate.ToString("yyyy-MM-dd")</td>
+                    <td>@training.TrainerName</td>
+                    <td>
+                        <a href="@Url.Action("EditTraining", "Admin", new { id = training.TrainingID })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("ViewApplicants", "Admin", new { trainingId = training.TrainingID })" class="btn btn-info btn-sm">View Applicants</a>
+
+                        <form asp-action="DeleteTraining" asp-controller="Admin" asp-route-id="@training.TrainingID" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this training?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted">No trainings found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,156 @@
+﻿@{
+    ViewData["Title"] = "Our Networks";
+    Layout = "userdash";
+}
+
+<section id="our-network">
+    <div class="container">
+        <h1>Our Network</h1>
+        <p>Explore our branches across the regions</p>
+
+        <div class="regions-wrapper">
+            <div class="region" id="north-region">
+                <h2>North Region</h2>
+                <div class="branch-card">
+                  
+                    <p>Address: 101 Connaught Place, New Delhi, Delhi </p>
+                    <p>Contact: +91-11-4567-8901</p>
+                    <p>Email: delhi@starservices.com</p>
+                    <p>Contact Person: Mr. Imran Khan</p>
+                </div>
+            </div>
+
+            <div class="region" id="west-region">
+                <h2>West Region</h2>
+                <div class="branch-card">
+                   
+                    <p>Address: 502 Andheri Corporate Park, Andheri East, Mumbai </p>
+                    <p>Contact: +91-22-3344-5566</p>
+                    <p>Email: mumbai@starservices.com</p>
+                    <p>Contact Person: Ms. Ayesha Siddiqui</p>
+                </div>
+            </div>
+
+            <div class="region" id="east-region">
+                <h2>East Region</h2>
+                <div class="branch-card">
+                   
+                    <p>Address: 23 Park Street, Near Metro Plaza, Kolkata, West Bengal </p>
+                    <p>Contact: +91-33-2290-1122</p>
+                    <p>Email: kolkata@starservices.com</p>
+                    <p>Contact Person: Mr. Saif Rahman</p>
+                </div>
+            </div>
+
+            <div class="region" id="south-region">
+                <h2>South Region</h2>
+                <div class="branch-card">
+                  
+                    <p>Address: 3rd Floor, MG Road Tower, MG Road, Bangalore, Karnataka</p>
+                    <p>Contact: +91-80-2233-4455</p>
+                    <p>Email: bangalore@starservices.com</p>
+                    <p>Contact Person: Ms. Fatima Noor</p>
+                </div>
+            </div>
+        </div>
+
+            </div>
+       
+</section>
+<style>
+
+    #our-network {
+        background-color: #111;
+        color: #f39c12;
+        padding: 40px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        color: #ddd;
+    }
+
+    .regions-wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .region {
+        width: 23%;
+        background-color: #222;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .region:hover {
+            transform: translateY(-10px);
+        }
+
+    h2 {
+        font-size: 1.5rem;
+        color: #f39c12;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    .branch-card {
+        background-color: #333;
+        border-radius: 10px;
+        padding: 20px;
+        /* border: 1px solid #f39c12; */
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+        .branch-card h3 {
+            font-size: 1.5rem;
+            color: #f39c12;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .branch-card p {
+            color: white;
+            margin: 10px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+    @@media screen and (max-width: 1024px) {
+        .region
+
+    {
+        width: 48%;
+    }
+
+    }
+
+    @@media screen and (max-width: 768px) {
+        .region
+
+    {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+
+    }
+</style>

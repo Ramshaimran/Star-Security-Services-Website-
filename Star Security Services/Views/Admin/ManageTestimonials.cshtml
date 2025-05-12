@@ -1,0 +1,116 @@
+﻿@* @model IEnumerable<Star_Security_Services.Models.Testimonials>
+
+@{
+    ViewData["Title"] = "Manage Testimonials";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">@ViewData["Title"]</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center align-middle">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 20%;">Username</th>
+                    <th style="width: 40%;">Message</th>
+                    <th style="width: 20%;">Image</th>
+                    <th style="width: 20%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var testimonial in Model)
+                {
+                    <tr>
+                        <td class="align-middle">@testimonial.Username</td>
+                        <td class="align-middle text-left">@testimonial.Feedback</td>
+                        <td class="align-middle">
+                            <img src="@Url.Content("~/images/" + testimonial.Image)" alt="User Image" class="img-thumbnail" width="60" height="60" />
+                        </td>
+                        <td class="align-middle">
+
+                            <a asp-controller="Admin"
+                               asp-action="Delete"
+                               asp-route-id="@testimonial.Id"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this testimonial?')">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+ *@
+
+
+
+                               @model IEnumerable<Star_Security_Services.Models.Testimonials>
+@{
+    var contacts = ViewBag.Contacts as List<Star_Security_Services.Models.Contact>;
+    ViewData["Title"] = "Manage Testimonials & Contacts";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">User Testimonials</h2>
+    <table class="table table-bordered table-hover text-center align-middle">
+        <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th>Message</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@t.Username</td>
+                    <td class="text-left">@t.Feedback</td>
+                    <td><img src="@Url.Content("~/images/" + t.Image)" width="60" class="img-thumbnail" /></td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@t.Id" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this testimonial?')">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2 class="text-center mb-4 mt-5">Contact Submissions</h2>
+    <table class="table table-bordered table-hover text-center align-middle">
+        <thead class="thead-dark">
+            <tr>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Company</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in contacts)
+            {
+                <tr>
+                    <td>@c.Email</td>
+                    <td>@c.PhoneNumber</td>
+                    <td>@c.CompanyName</td>
+                    <td>@c.Subject</td>
+                    <td class="text-left">@c.Message</td>
+                    <td>
+                        <a asp-action="DeleteContact" asp-route-id="@c.Id" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this contact message?')">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

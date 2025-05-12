@@ -1,0 +1,732 @@
+﻿@{
+    ViewData["Title"] = "Home - Star Security Services";
+    Layout = "userdash";
+}
+@{
+    var testimonials = ViewBag.Testimonials as List<Star_Security_Services.Models.Testimonials>;
+}
+
+@model IEnumerable<Star_Security_Services.Models.Testimonials>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+        }
+
+        .hero-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .text-container {
+            flex: 1;
+            color: #fff;
+            padding: 30px;
+            text-align: left;
+            position: relative;
+            z-index: 2;
+            margin-top: -12vw;
+        }
+
+        .text-change {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
+            margin-top: -6vw;
+        }
+
+        @@keyframes slideInAndPause {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            40% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+        }
+
+        .hero-text {
+            font-size: 2.25rem;
+            font-weight: bold;
+            position: absolute;
+            top: 30%;
+            transform: translateY(-30%);
+            width: 100%;
+            opacity: 0;
+            animation-name: slideInAndPause;
+            animation-duration: 18s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: both;
+            animation-iteration-count: infinite;
+        }
+
+            .hero-text:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            .hero-text:nth-child(2) {
+                animation-delay: 6s;
+            }
+
+            .hero-text:nth-child(3) {
+                animation-delay: 12s;
+            }
+
+            .hero-text p {
+                margin: 1rem 0 0;
+                font-weight: normal;
+                font-size: 1.1rem;
+            }
+
+        .footer {
+            background-color: #1a202c;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .navbar {
+            /* background-color: #0a1a2f;  */
+            /* background-color:#1a202c; */
+            height: 6vw;
+            background-color: black;
+            /*  background: url(./images/bg.jpg);
+                    padding: 10px 20px; */
+        }
+
+        .imgs {
+            width: 12vw;
+            height: 12vw;
+            margin-top: 2vw;
+        }
+
+        .navbar-brand {
+            height: 120px;
+            width: 8vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* border:2px solid red;  */
+            margin-left: .3vw;
+            /*    background:url(./images/stack.gif) no-repeat center;
+                    background-size:15vw; */
+            /* margin-top:2.7vw; */
+        }
+
+        .btn-login {
+            background-color: #f39c12;
+            color: black;
+            font-weight: 900;
+            border: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            padding-left: .5vw;
+            padding-right: .5vw;
+            border-radius: 4px;
+        }
+
+            .btn-login:hover {
+                background-color: #e67e22;
+                color: white;
+            }
+
+        #wh {
+            color: white !important;
+        }
+
+        a {
+            text-decoration: none;
+        }
+        .navbar-nav .nav-link {
+            color: #d4af37 !important;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #d4af37 !important;
+            }
+
+        .navbar-nav {
+            color: #d4af37 !important;
+        }
+
+        .sticky-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+            .footer a {
+                color: #f39c12;
+                text-decoration: none;
+            }
+
+                .footer a:hover {
+                    color: #e67e22;
+                }
+
+            .footer .social-icons i {
+                margin: 0 10px;
+                font-size: 24px;
+                color: #fff;
+            }
+
+                .footer .social-icons i:hover {
+                    color: #f39c12;
+                }
+
+        #preloaderCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: #1a202c;
+            z-index: 9999;
+        }
+       /*  #hsd{
+            background-color:#000;
+        } */
+
+        #mainContent {
+            /* display: none; */
+        }
+    </style>
+</head>
+<body>
+    <script src="~/js/particles.min.js" asp-append-version="true"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+
+    <section id="hsd" class="hero-section d-flex align-items-center justify-content-center text-light text-center" style="background-color: #000; height: 100vh; overflow: hidden; position: relative; z-index: 1;">
+
+
+
+        <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+
+
+
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md-6 text-start">
+                    <h1 id="mainHeading" class="click-animate" style="font-size: 4rem; font-weight: 800; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; cursor: pointer;">
+                        Star Security <span id="changing-word">Services</span><span class="blinking-cursor">|</span>
+                    </h1>
+                    <p style="color: #f0e6c0; font-size: 1.2rem; margin-top: 20px; line-height: 1.8;">
+                        Providing elite protection with professionalism and integrity. Your safety is our mission — with modern technology and experienced personnel, we guard what matters most.
+                    </p>
+                    <a href="@Url.Action("OurBusiness", "User")" class="btn btn-gold mt-4 px-4 py-2">Learn More</a>
+                </div>
+
+                <div class="col-md-6 text-center">
+                    <div class="image-box position-relative">
+                            <img src="@Url.Content("~/images/star.png")" alt="Golden Star Shield" class="img-fluid pulse-img" style="max-width: 450px;" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gold-glow top-right"></div>
+        <div class="gold-glow bottom-left"></div>
+      
+
+        <style>
+            .btn-gold {
+                background-color: #d4af37;
+                color: #000;
+                font-weight: bold;
+                border: none;
+                border-radius: 30px;
+                transition: all 0.3s ease;
+            }
+
+                .btn-gold:hover {
+                    background-color: #b9962f;
+                    transform: translateY(-3px);
+                    box-shadow: 0 8px 15px rgba(212, 175, 55, 0.4);
+                }
+
+            .pulse-img {
+                animation: pulse 3s infinite;
+            }
+
+            .blinking-cursor {
+                font-weight: 500;
+                color: #d4af37;
+                animation: blink 1s step-end infinite;
+            }
+
+            @@keyframes blink {
+                from, to
+
+            {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            }
+
+            @@keyframes pulse {
+                0%
+
+            {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+
+            }
+
+            .gold-glow {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, #d4af37aa, transparent 70%);
+                z-index: 1;
+            }
+
+            .top-right {
+                top: -50px;
+                right: -50px;
+            }
+
+            .bottom-left {
+                bottom: -50px;
+                left: -50px;
+            }
+
+            .center-pulse {
+                width: 200px;
+                height: 200px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                animation: pulse 5s infinite;
+            }
+
+            @@media (max-width: 768px) {
+                .hero-section
+
+            {
+                height: auto;
+                padding: 60px 20px;
+                text-align: center;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .image-box {
+                margin-top: 40px;
+            }
+            }
+            img{
+                border-color:none;            
+            }
+        </style>
+
+        <script>
+            const words = ["Services", "Providers", "Experts", "Guards", "Specialists"];
+            let index = 0;
+            const changingWord = document.getElementById("changing-word");
+
+            setInterval(() => {
+                index = (index + 1) % words.length;
+                changingWord.textContent = words[index];
+            }, 3000);
+
+            document.getElementById("mainHeading").addEventListener("click", function () {
+                this.classList.remove("click-animate");
+                void this.offsetWidth; // Forces reflow to restart the animation
+                this.classList.add("click-animate");
+            });
+
+            // ParticlesJS config
+                  
+            document.addEventListener("DOMContentLoaded", function () {
+                // Initialize particlesJS once the document is ready
+                particlesJS("particles-js", {
+                    particles: {
+                        number: {
+                            value: 80,
+                            density: {
+                                enable: true,
+                                value_area: 800
+                            }
+                        },
+                        color: { value: "#d4af37" },
+                        shape: {
+                            type: "circle",
+                            stroke: { width: 0, color: "#000000" }
+                        },
+                        opacity: {
+                            value: 0.5,
+                            random: true,
+                            anim: { enable: false }
+                        },
+                        size: {
+                            value: 3,
+                            random: true,
+                            anim: { enable: false }
+                        },
+                        line_linked: {
+                            enable: true,
+                            distance: 150,
+                            color: "#d4af37",
+                            opacity: 0.4,
+                            width: 1
+                        },
+                        move: {
+                            enable: true,
+                            speed: 2,
+                            direction: "none",
+                            random: false,
+                            straight: false,
+                            out_mode: "out",
+                            bounce: false
+                        }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: {
+                            onhover: { enable: true, mode: "repulse" },
+                            onclick: { enable: true, mode: "push" },
+                            resize: true
+                        },
+                        modes: {
+                            repulse: { distance: 100, duration: 0.4 },
+                            push: { particles_nb: 4 }
+                        }
+                    },
+                    retina_detect: true
+                });
+            });
+       
+
+        </script>
+    </section>
+
+
+
+  
+
+    <!-- About Us Section -->
+    <section class="about-us py-5" style="background-color: #0b0b0b; color: #f0e6c0;">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="text-center mb-5 fade-in">
+                <h2 style="color: #d4af37; font-weight: 800; font-size: 2.8rem; letter-spacing: 1px; text-transform: uppercase;">
+                    About Us
+                </h2>
+                <p style="font-size: 1.1rem; color: #ccc;">Star Security Services - Premium Protection with Integrity</p>
+            </div>
+
+            <!-- Row 1 -->
+            <div class="row mb-5 align-items-center fade-right">
+                <div class="col-md-6 text-center mb-4 mb-md-0">
+                    <div class="img-box">
+                            <img src="@Url.Content("~/images/sec.jpeg")" alt="Reliable Security Solutions" class="img-fluid about-img"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="about-text">
+                        <h3 class="about-title">Reliable Security Solutions</h3>
+                        <p>We offer unmatched protection for all types of properties, ensuring safety through modern technologies and expert personnel.</p>
+                        <p>Our services are fully customizable to meet the unique needs of each client, from corporate offices to residential areas.</p>
+                        <p>Trust us to provide peace of mind with 24/7 protection and a commitment to excellence.</p>
+                        <a href="@Url.Action("OurBusiness", "User")" class="btn-gold mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+                <div class="row mb-5 align-items-center flex-md-row-reverse fade-in">
+                    <div class="col-md-6 text-center mb-4 mb-md-0">
+                        <div class="img-box">
+                            <img src="@Url.Content("~/images/cctv.jpeg")" alt="Advanced Surveillance Systems" class="img-fluid about-img">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="about-text">
+                            <h3 class="about-title">Advanced Surveillance Systems</h3>
+                            <p>Our AI-powered CCTV solutions offer real-time monitoring and intelligent alerts for unmatched security.</p>
+                            <p>Whether residential or commercial, our systems are tailored to ensure seamless integration and top-tier protection.</p>
+                            <p>Stay connected to your property with mobile access and 24/7 recording.</p>
+                            <a href="@Url.Action("OurBusiness", "User")" class="btn-gold mt-3">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="row align-items-center fade-right">
+                    <div class="col-md-6 text-center mb-4 mb-md-0">
+                        <div class="img-box">
+                            <img src="@Url.Content("~/images/gun.jpeg")" alt="Armed Security Personnel" class="img-fluid about-img">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="about-text">
+                            <h3 class="about-title">Armed Security Personnel</h3>
+                            <p>We provide elite armed security for high-risk areas, ensuring your peace of mind through skilled professionals.</p>
+                            <p>Each guard is equipped with the latest gear and trained to handle all types of situations with discretion and professionalism.</p>
+                            <p>Our solutions are adaptable, effective, and tailored to your threat level and requirements.</p>
+                            <a href="@Url.Action("OurBusiness", "User")" class="btn-gold mt-3">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+        <!-- CSS Styles -->
+        <style>
+            .about-title {
+                color: #d4af37;
+                font-size: 2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                margin-bottom: 20px;
+            }
+
+            .about-text p {
+                font-size: 1.05rem;
+                color: #e0d8b0;
+                line-height: 1.7;
+            }
+
+            .btn-gold {
+                background-color: #d4af37;
+                color: #000;
+                padding: 10px 30px;
+                font-weight: 600;
+                border-radius: 30px;
+                border: none;
+                text-transform: uppercase;
+                transition: 0.3s ease;
+                letter-spacing: 1px;
+                text-decoration: none;
+                display: inline-block;
+            }
+
+                .btn-gold:hover {
+                    background-color: #b9962f;
+                    transform: translateY(-3px);
+                    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+                }
+
+            .about-img {
+                border: none; 
+                border-radius: 20px;
+                transition: transform 0.3s ease;
+                max-width: 100%;
+                height: auto;
+            }
+
+
+                .about-img:hover {
+                    transform: scale(1.03);
+                }
+
+            @@media (max-width: 768px) {
+                .about-title
+
+            {
+                font-size: 1.5rem;
+            }
+
+            .about-text p {
+                font-size: 0.95rem;
+            }
+
+            .btn-gold {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+
+            }
+
+         
+            .fade-in, .fade-right {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+
+            .fade-right {
+                transform: translateX(50px);
+            }
+
+            .show {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+
+            .text-gold {
+                color: #d4af37;
+            }
+
+            .border-gold {
+                border-color: #d4af37;
+            }
+
+            .bg-gold {
+                background-color: #d4af37;
+            }
+
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    observer.unobserve(entry.target);
+                  }
+                });
+              }, {
+                threshold: 0.1
+              });
+
+              document.querySelectorAll('.fade-in, .fade-right').forEach(el => {
+                observer.observe(el);
+              });
+            });
+        </script>
+    </section>
+
+    @if (ViewData["Testimonials"] != null && ((List<Testimonials>)ViewData["Testimonials"]).Any())
+    {
+        var testimonialss = (List<Testimonials>)ViewData["Testimonials"];
+        <section class="py-5" style="background-color: #1c1c1c;">
+            <div class="container">
+                <h2 class="mb-5 fw-bold text-center" style="color: #d4af37; letter-spacing: 1px; font-size: 2.5rem;">
+                    What Our Clients Say
+                </h2>
+                <div class="row g-4">
+                        @foreach (var item in testimonialss)
+                        {
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="card h-100 bg-dark text-white border rounded-4 shadow-lg " style="border-color:none;">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                        <img src="@Url.Content($"~/users/{item.Image}")" alt="@item.Username"
+                                             class="rounded-circle shadow"
+                                             style="width: 90px; height: 90px; object-fit: cover;" />
+
+                                        </div>
+                                        <h5 class="card-title text-warning mt-3">@item.Username</h5>
+                                        <p class="card-text fst-italic text-light">"@item.Feedback"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                </div>
+
+                <!-- Show More Button -->
+                <div class="text-center mt-4">
+                    @if (Context.Session.GetString("username") == null)
+                    {
+                        <!-- If user is not logged in, redirect to login page -->
+                        <a href="@Url.Action("Login", "Admin")">
+                            <button class="btn btn-warning btn-lg" style="background-color: #d4af37; border: none;">
+                               See More
+                            </button>
+                        </a>
+                    }
+                    else
+                    {
+                        <!-- If user is logged in, show more testimonials -->
+                        <a href="@Url.Action("testimonal", "User")" class="btn btn-warning btn-lg" style="background-color: #d4af37; border: none;">
+                          
+                                Show More
+                        
+                        </a>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="py-5 text-center" style="background-color: #1c1c1c;">
+            <h3 class="text-warning">No testimonials available yet.</h3>
+        </section>
+    }
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+   
+
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

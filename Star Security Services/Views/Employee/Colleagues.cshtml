@@ -1,0 +1,46 @@
+﻿@model List<Star_Security_Services.Models.Employee>
+
+@{
+    ViewData["Title"] = "My Colleagues";
+    Layout = "Employee"; // Or your main layout
+}
+
+<div class="container mt-4">
+    <h2>👥 My Colleagues</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int i = 1;
+                foreach (var emp in Model)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@emp.Name</td>
+                        <td>@emp.email</td>
+                        <td>@emp.Department</td>
+                        <td>@emp.Role</td>
+                        <td>@emp.ContactNumber</td>
+                    </tr>
+                    i++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No colleagues found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

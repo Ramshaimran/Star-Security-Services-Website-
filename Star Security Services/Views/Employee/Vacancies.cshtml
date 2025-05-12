@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Star_Security_Services.Models.vacan>
+
+@{
+    ViewBag.Title = "Available Vacancies";
+    Layout = "Employee"; // Use your Employee layout
+}
+
+<h2 class="mb-4 text-center">Available Vacancies</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="container">
+    <!-- Scrollable vacancy section -->
+    <div class="row g-3 overflow-auto" style="max-height: 80vh;">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var vacancy in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">@vacancy.JobTitle</h5>
+                            <p class="card-text"><strong>Department:</strong> @vacancy.Department</p>
+                            <p class="card-text"><strong>Location:</strong> @vacancy.Location</p>
+                            <p class="card-text"><strong>Experience Required:</strong> @vacancy.ExperienceRequired</p>
+                            <p class="card-text"><strong>Education:</strong> @vacancy.EducationalQualification</p>
+                            <p class="card-text"><strong>Salary:</strong> @vacancy.SalaryRange</p>
+                            <p class="card-text">
+                                <strong>Posted On:</strong>
+                                @if (DateTime.TryParse(vacancy.PostedDate, out var postedDate))
+                                {
+                                    <text>@postedDate.ToString("dd MMM yyyy")</text>
+                                }
+                                else
+                                {
+                                    <text>N/A</text>
+                                }
+                            </p>
+
+                            <p class="card-text">
+                                <strong>Closing Date:</strong>
+                                @if (DateTime.TryParse(vacancy.ClosingDate, out var closingDate))
+                                {
+                                    <text>@closingDate.ToString("dd MMM yyyy")</text>
+                                }
+                                else
+                                {
+                                    <text>N/A</text>
+                                }
+                            </p>
+
+                            <p class="card-text">@vacancy.JobDescription</p>
+
+                            <!-- Apply Online Form -->
+                            @if (!string.IsNullOrEmpty(vacancy.VacancyLink))
+                            {
+                                <form method="post" action="@Url.Action("ApplyForVacancy", "Employee")">
+                                    <input type="hidden" name="vacancyId" value="@vacancy.VacancyID" />
+                                    <button type="submit" class="btn btn-primary mt-2">Apply Online</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p class="text-muted">No vacancies available at the moment.</p>
+            </div>
+        }
+    </div>
+</div>

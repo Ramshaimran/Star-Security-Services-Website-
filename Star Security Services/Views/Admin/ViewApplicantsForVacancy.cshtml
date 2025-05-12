@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Star_Security_Services.Models.VacancyApplication>
+
+@{
+    ViewBag.Title = "Applicants for Vacancy";
+    Layout = "dashboard"; // Adjust the layout path accordingly
+}
+
+<h2 class="text-center mb-4">Applicants for Vacancy: @ViewData["VacancyTitle"]</h2>
+
+<!-- Success Message -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Error Message -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>User Code</th> <!-- Updated column name -->
+                <th>Applied On</th>
+                <th>Job Title</th>
+                <th>Department</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model)
+            {
+                <tr>
+                    <td>@applicant.UserName</td> <!-- Updated field name -->
+                    <td>@applicant.UserEmail</td> <!-- Updated field name -->
+                    <td>@applicant.UserId</td> <!-- Updated field name -->
+                    <td>@applicant.AppliedOn.ToString("dd MMM yyyy hh:mm tt")</td>
+                    <td>@applicant.JobTitle</td>
+                    <td>@applicant.Department</td>
+                    <td>@applicant.Location</td>
+                    <td>
+                        <!-- Accept Button -->
+                        <form method="post" asp-action="HandleApplicationForVacancy" asp-controller="User" style="display:inline-block;">
+                            <input type="hidden" name="applicationId" value="@applicant.Id" />
+                            <input type="hidden" name="actionType" value="Confirm" />
+                            <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                        </form>
+
+                        <!-- Reject Button -->
+                        <form method="post" asp-action="HandleApplicationForVacancy" asp-controller="User" style="display:inline-block; margin-left: 5px;">
+                            <input type="hidden" name="applicationId" value="@applicant.Id" />
+                            <input type="hidden" name="actionType" value="Reject" />
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info text-center">
+        No applicants for this vacancy.
+    </div>
+}

@@ -1,0 +1,39 @@
+﻿@model List<Employee>
+@{
+    ViewBag.Title = "Assign Employee";
+    var serviceType = ViewBag.ServiceType as string;
+    var bookingId = ViewBag.BookingId;
+    Layout = "dashboard";
+}
+
+<h2>Available Employees for: @serviceType</h2>
+
+<form asp-action="AssignEmployees" method="post">
+    <input type="hidden" name="bookingId" value="@bookingId" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Name</th>
+                <th>Service Type</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="selectedEmployees" value="@emp.Id" />
+                    </td>
+                    <td>@emp.Name</td>
+                    <td>@emp.Department</td>
+                    <td>@emp.email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Submit button to assign selected employees -->
+    <button type="submit" class="btn btn-success">Assign Selected Employees</button>
+</form>

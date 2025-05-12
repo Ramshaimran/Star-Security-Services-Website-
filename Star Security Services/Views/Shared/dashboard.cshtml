@@ -1,0 +1,239 @@
+﻿@{
+    Layout = null;  // Layout file for Admin views
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Star Security Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap & Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --military-green: #2f4f2f;
+            --military-hover: #3b5e3b;
+            --military-text: #ffffff;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: #f2f2f2;
+        }
+
+        .navbar-military {
+            background-color: var(--military-green);
+        }
+
+            .navbar-military .nav-link,
+            .navbar-military .navbar-brand,
+            .navbar-military .dropdown-item {
+                color: var(--military-text) !important;
+            }
+
+                .navbar-military .nav-link:hover,
+                .navbar-military .dropdown-item:hover {
+                    background-color: var(--military-hover);
+                    color: #fff !important;
+                }
+
+        .footer {
+            background-color: var(--military-green);
+            color: var(--military-text);
+        }
+
+        .btn-outline-light {
+            border-color: #fff;
+            color: #fff;
+        }
+
+            .btn-outline-light:hover {
+                background-color: var(--military-hover);
+                border-color: var(--military-hover);
+            }
+
+        /* Fix dropdown item text color for white background */
+        .navbar-military .dropdown-menu {
+            background-color: #ffffff;
+        }
+
+            .navbar-military .dropdown-menu .dropdown-item {
+                color: #212529 !important; /* Dark text for readability */
+            }
+
+                .navbar-military .dropdown-menu .dropdown-item:hover {
+                    background-color: var(--military-hover);
+                    color: #fff !important;
+                }
+
+        /* Sidebar full height */
+        .admin-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            min-height: 0;
+        }
+
+        .sidebar-wrapper {
+            width: 250px;
+            background-color: #ffffff;
+            border-right: 1px solid #dee2e6;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .sidebar-wrapper h5 {
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .sidebar-wrapper ul {
+                padding: 0;
+                width: 100%;
+            }
+
+                .sidebar-wrapper ul li {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 20px; /* Increased margin between items */
+                }
+
+                    .sidebar-wrapper ul li a {
+                        text-decoration: none;
+                        width: 100%;
+                        text-align: center;
+                        padding: 15px; /* Increased padding inside each item */
+                        border-radius: 5px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin: 0 auto; /* Center each item */
+                    }
+
+                    .sidebar-wrapper ul li:hover {
+                        background-color: #f8f9fa;
+                    }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-military">
+        <a class="navbar-brand" href="/Admin/Dashboard">Star Security Admin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#adminNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="adminNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageEmployees","Admin")">Manage Employees</a></li>
+
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageVacancies","Admin")">Manage Vacancies</a></li>
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageServices","Admin")">Manage Services</a></li>
+         
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageClients","Admin")">Manage Clients</a></li>
+
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageTrainings","Admin")">Manage Trainings</a></li>
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageBookings","Admin")">Services Availed</a></li>
+
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageAssignments","Admin")">Assigned Employees</a></li>
+
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("ManageTestimonials","Admin")">Manage Testimonials</a></li>
+              
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light" href="@Url.Action("Logout","Admin")">
+                        <i class="fas fa-qrcode"></i> Logout
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown">
+                        <i class="fas fa-user-shield"></i> @User.Identity.Name
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="@Url.Action("Index","Admin")" ">My Profile</a>
+                       
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Admin")"
+                           onclick="return confirm('Are you sure you want to log out?')">
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Wrapper: Sidebar + Main -->
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar-wrapper">
+            <h5 class="text-success mb-3">Quick Actions</h5>
+            <ul class="list-group mb-4">
+                <li class="list-group-item">
+                    <a href="@Url.Action("AddEmployee","Admin")"><i class="fas fa-user-plus text-success"></i> Add Employee</a>
+                </li>
+                <li class="list-group-item">
+                    <a href=" @Url.Action("PostVacancy", "Admin")"><i class="fas fa-plus-circle text-warning"></i> Post Vacancy</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="@Url.Action("AddService","Admin")"><i class="fas fa-plus text-info"></i> Add Service</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="@Url.Action("AddClient","Admin")"><i class="fas fa-user-tie text-primary"></i> Add Client</a>
+                </li>
+              @*   <li class="list-group-item">
+                    <a href="@Url.Action("ScanOrUploadQRCode","Admin")"><i class="fas fa-qrcode text-dark"></i> Scan QR Code</a>
+                </li> *@
+
+                <li class="list-group-item">
+                    <a href="@Url.Action("AddTraining","Admin")"><i class="fas fa-chalkboard-teacher text-dark"></i> Add Trainings</a>
+                </li>
+
+              
+
+
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center py-3">
+        <div class="container">
+            &copy; @DateTime.Now.Year Star Securities Ltd. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

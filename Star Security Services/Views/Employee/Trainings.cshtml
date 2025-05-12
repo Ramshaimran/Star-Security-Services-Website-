@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Star_Security_Services.Models.Training>
+
+@{
+    ViewBag.Title = "Trainings";
+    Layout = "Employee"; // Use your actual layout path if different
+}
+
+<h2 class="mb-4 text-center">Available Trainings</h2>
+
+<!-- Display success/error message -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var training in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@training.Title</h5>
+                        <p class="card-text"><strong>Department:</strong> @training.Department</p>
+                        <p class="card-text"><strong>Mode:</strong> @training.Mode</p>
+                        <p class="card-text"><strong>Trainer:</strong> @training.TrainerName</p>
+                        <p class="card-text">
+                            <strong>Duration:</strong>
+                            @training.StartDate.ToString("dd MMM yyyy") -
+                            @training.EndDate.ToString("dd MMM yyyy")
+                        </p>
+                        <p class="card-text">@training.Description</p>
+
+                        <!-- Apply Button -->
+                        <form asp-action="ApplyForTraining" asp-controller="Employee" method="post">
+                            <input type="hidden" name="trainingId" value="@training.TrainingID" />
+                            <button type="submit" class="btn btn-success btn-sm mt-2">Apply</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
