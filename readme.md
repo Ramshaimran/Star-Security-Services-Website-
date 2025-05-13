@@ -69,7 +69,7 @@ Admins can:
 
 ### Run Locally
 1. Clone the repo
-   git clone https://github.com/<your-username>/star-security-services.git
+   git clone https://github.com/Ramshaimran/star-security-services.git
    cd star-security-services
 2. Restore packages and build:
    dotnet restore
